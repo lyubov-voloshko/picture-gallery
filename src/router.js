@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
+import VanGogh from './views/vanGogh.vue'
+import Klimt from './views/klimt.vue'
+import Picture from './views/picture.vue'
 
 Vue.use(Router)
 
@@ -14,12 +17,19 @@ export default new Router({
       component: Home
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      path: '/vanGogh',
+      name: 'van Gogh',
+      component: VanGogh
+    },
+    {
+      path: '/klimt',
+      name: 'Klimt',
+      component: Klimt
+    },
+    {
+      path: '/:author/:id',
+      name: 'picture',
+      component: Picture
     }
   ]
 })

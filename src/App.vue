@@ -1,31 +1,72 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <nav>
+      <h1><router-link to="/">Gallery</router-link></h1>
+      <ul>
+        <li><router-link to="/vanGogh">van Gogh</router-link></li>
+        <li><router-link to="/klimt">Klimt</router-link></li>
+      </ul>
+    </nav>
+    <main>
+      <router-view/>
+    </main>
   </div>
 </template>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
+  * {
+    margin: 0;
+    padding: 0;
+  }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+  #app {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    min-height: 100vh;
+  }
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    box-shadow: 0 0 2px 1px rgba(0,0,0,0.3);
+    height: 64px;
+    padding: 0 3%;
+    z-index: 2;
+  }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  ul {
+    display: flex;
+    list-style: none;
+  }
+
+  li {
+    display: inline-block;
+    margin-left: 2vw;
+  }
+
+  li a {
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  main {
+    display: flex;
+    align-items: center;
+    flex: 1 0 auto;
+  }
 </style>

@@ -1,7 +1,18 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>Amazing Picture Gallery</h1>
+    <button @click="toggleAddForm()">Add Some Painting</button>
+
+    <form @submit="handleSubmit()" v-if="addFormShown">
+      <label>Author</label>
+      <input type="text" />
+
+      <label>Painting Title</label>
+      <input type="text" />
+
+      <label>Painting location</label>
+      <input type="text" />
+    </form>
   </div>
 </template>
 
@@ -11,8 +22,22 @@ import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'home',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      addFormShown: false,
+      formData: {
+        author: '',
+
+      }
+    }
+  },
+  methods: {
+    toggleAddForm () {
+      this.addFormShown = !this.addFormShown
+    },
+    handleSubmit () {
+
+    }
   }
 }
 </script>
