@@ -16,15 +16,24 @@
         </p>
       </blockquote>
     </header>
-    <Painting v-for="(painting, index) in vanGogh" :key="index" :index="index" :painting="painting" theme="vanGogh"/>
+    <Painting v-for="(painting, index) in vanGogh"
+              :key="index"
+              :index="index"
+              :painting="painting"
+              :artist="'vanGogh'"
+              :mode="mode"
+    />
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import Painting from '../components/painting'
+import Painting from '../components/paintingCard'
 
 export default {
+  props: {
+    mode: String
+  },
   components: {
     Painting
   },
@@ -45,6 +54,7 @@ export default {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;
     padding: 0 10%;
+    transition: all 400ms ease;
   }
   header {
     grid-column: 1 / span 2;

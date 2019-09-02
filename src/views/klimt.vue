@@ -12,15 +12,24 @@
         </p>
       </blockquote>
     </header>
-    <Painting v-for="(painting, index) in klimt" :key="index" :index="index" :painting="painting" theme="klimt"/>
+    <Painting v-for="(painting, index) in klimt"
+              :key="index"
+              :index="index"
+              :painting="painting"
+              :artist="'klimt'"
+              :mode="mode"
+    />
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import Painting from '../components/painting'
+import Painting from '../components/paintingCard'
 
 export default {
+  props: {
+    mode: String
+  },
   components: {
     Painting
   },
@@ -41,10 +50,11 @@ export default {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;
     padding: 0 10%;
+    transition: all 400ms ease;
   }
   header {
     grid-column: 1 / span 2;
-    background-color:#F4C658;
+    background-color:#f3b75b;
     box-shadow: inset 0 0 4px 2px rgba(0,0,0,0.3);
     text-align: left;
     padding: 20px 30px 0;

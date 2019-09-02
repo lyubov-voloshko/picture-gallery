@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import VanGogh from './views/vanGogh.vue'
 import Klimt from './views/klimt.vue'
-import Picture from './views/picture.vue'
+import Picture from './views/paintingPage.vue'
 
 Vue.use(Router)
 
