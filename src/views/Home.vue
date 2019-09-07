@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>Amazing Picture Gallery ({{ paintingsCount }} items, {{ getOilPaintings.length }} oil)</h1>
+    <h1>Amazing Picture Gallery</h1>
 
     <form @submit.prevent="handleSubmit">
       <fieldset>
@@ -12,24 +12,24 @@
           <option value="klimt">Gustav Klimt</option>
           <option value="vanGogh">Vincent van Gogh</option>
         </select>
+        <label>Painting Name</label>
+        <select v-model="formData.paintingId" :disabled="formData.artistName === null">
+          <option v-for="(painting, index) in $store.state[formData.artistName]"
+                  :value="painting.id"
+                  :key="index">{{ painting.title }}
+          </option>
+        </select>
 
         <label>Review</label>
         <textarea v-model="formData.reviewText" placeholder="I like this artist because of ..."></textarea>
       </fieldset>
       <button>Submit</button>
     </form>
-
-    <ul>
-      <li v-for="(review, index) in reviews" :key="index">
-        <h3> {{ review.userName }} </h3> <span>about {{ review.artistName }}</span>
-        <p> {{ review.reviewText }} </p>
-      </li>
-    </ul>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex';
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'home',
@@ -38,6 +38,7 @@ export default {
       formData: {
         userName: '',
         artistName: null,
+        paintingId: null,
         reviewText: ''
       }
     }
@@ -47,10 +48,11 @@ export default {
       'addReview'
     ]),
     handleSubmit () {
-      const { userName, artistName, reviewText } = this.formData
+      const { userName, artistName, paintingId, reviewText } = this.formData
       const review = {
         userName,
         artistName,
+        paintingId,
         reviewText
       }
       this.addReview(review)
@@ -58,14 +60,12 @@ export default {
       this.formData = {
         userName: '',
         artistName: null,
+        paintingId: null,
         reviewText: ''
       }
     }
   },
   computed: {
-    ...mapState([
-      'reviews'
-    ]),
     ...mapGetters([
       'paintingsCount',
       'getOilPaintings'
@@ -77,11 +77,7 @@ export default {
 <style scoped>
   .home {
     align-self: flex-start;
-    display: grid;
-    grid-template-columns: 1fr minmax(0, 1.5fr);
-    grid-gap: 5%;
     margin: 60px auto 0;
-    width: 70%;
   }
 
   h1 {

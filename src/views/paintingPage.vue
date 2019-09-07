@@ -3,10 +3,28 @@
     <img :src=painting.imageURL />
 
     <div class="info">
-      <h1>{{ painting.title }}</h1><span>painted in {{ painting.year }}</span>
-      <p class="paintedBy">by <router-link :to="`/${$route.params.author}`" class="authorName">{{ painting.author }}</router-link></p>
-      <p>{{ painting.medium }}</p>
-      <p>{{ painting.location }}</p>
+      <div class="tabs">
+        <button class="tab"
+                :class="{ tab_active: isActive('description') }"
+                @click="handleSwitchTab('description')">Description</button>
+        <button class="tab"
+                :class="{ tab_active: isActive('reviews') }"
+                @click="handleSwitchTab('reviews')">Reviews</button>
+      </div>
+      <div class="tabContent" :class="{ tabContent_active: isActive('description') }">
+        <h1>{{ painting.title }}</h1><span>painted in {{ painting.year }}</span>
+        <p class="paintedBy">by <router-link :to="`/${$route.params.author}`" class="authorName">{{ painting.author }}</router-link></p>
+        <p>{{ painting.medium }}</p>
+        <p>{{ painting.location }}</p>
+      </div>
+      <div class="tabContent tabContent_floating" :class="{ tabContent_active: isActive('reviews') }">
+        <ul class="reviews">
+          <li v-for="(review, index) in painting.reviews" :key="index" class="review">
+            <h3> {{ review.userName }} </h3>
+            <p> {{ review.reviewText }} </p>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -21,6 +39,7 @@ export default {
   data () {
     return {
       painting: {},
+      tabActive: 'description',
       artistThemes: {
         vanGogh: {
           dark: {
@@ -67,9 +86,9 @@ export default {
       'klimt'
     ]),
     cssVars () {
-      const cardTheme = this.artistThemes[this.$route.params.author];
-      console.log(this.mode);
-      console.log(cardTheme[this.mode]);
+      const cardTheme = this.artistThemes[this.$route.params.author]
+      console.log(this.mode)
+      console.log(cardTheme[this.mode])
       return {
         '--bg-color': cardTheme[this.mode].bgColor,
         '--bg-color-inscription': cardTheme[this.mode].bgColorInscription,
@@ -80,8 +99,18 @@ export default {
       }
     }
   },
-  mounted() {
-    this.painting = this[this.$route.params.author][this.$route.params.id];
+  methods: {
+    handleSwitchTab (type) {
+      this.tabActive = type
+    },
+    isActive (type) {
+      if (this.tabActive === type) {
+        return true
+      }
+    }
+  },
+  mounted () {
+    this.painting = this[this.$route.params.author][this.$route.params.id]
   }
 }
 </script>
@@ -100,12 +129,52 @@ export default {
   }
 
   .info {
+    position: relative;
     background: var(--bg-color-inscription);
     box-shadow: 1px 1px 2px 1px rgba(0,0,0,0.2);
     color: var(--text-color-inscription);
     padding: 0 20px 30px;
     text-align: right;
     transition: all 400ms ease;
+  }
+
+  .tabs {
+    display: flex;
+    width: 100%;
+  }
+
+  .tab {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid transparent;
+    height: 32px;
+    margin: 10px 20px 0 0;
+  }
+
+  .tab_active {
+    border-bottom: 1px solid var(--text-color-inscription);
+  }
+
+  .tabContent {
+    float: left;
+    clear: both;
+    opacity: 0;
+    transition: all 300ms;
+  }
+
+  .tabContent_floating {
+    position: absolute;
+    top: 60px;
+    left: 20px;
+  }
+
+  .tabContent_active {
+    opacity: 1;
+  }
+
+  .review {
+    margin-left: 0;
+    text-align: left;
   }
 
   img {
@@ -115,7 +184,7 @@ export default {
 
   h1 {
     font-size: 1.5em;
-    margin: 40px 0 5px;
+    margin: 25px 0 5px;
   }
 
   .paintedBy {
