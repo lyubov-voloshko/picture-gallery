@@ -1,5 +1,5 @@
 export default {
-  addPainting: ({ commit }, payload) => {
-    commit('appendPainting', payload)
+  addReview: ({ commit }, payload) => {
+    commit('appendReview', payload)
   }
 }

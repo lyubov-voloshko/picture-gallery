@@ -1,5 +1,5 @@
 export default {
-  appendPainting: (state, { painting, author }) => {
-    state[author].push(painting)
+  appendReview: (state, review) => {
+    state.reviews.push(review)
   }
 }

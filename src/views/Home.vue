@@ -1,43 +1,162 @@
 <template>
   <div class="home">
-    <h1>Amazing Picture Gallery</h1>
-    <button @click="toggleAddForm()">Add Some Painting</button>
+    <h1>Amazing Picture Gallery ({{ paintingsCount }} items, {{ getOilPaintings.length }} oil)</h1>
 
-    <form @submit="handleSubmit()" v-if="addFormShown">
-      <label>Author</label>
-      <input type="text" />
+    <form @submit.prevent="handleSubmit">
+      <fieldset>
+        <label>Your Name</label>
+        <input type="text" v-model="formData.userName" placeholder="John Smith"/>
 
-      <label>Painting Title</label>
-      <input type="text" />
+        <label>Artist Name</label>
+        <select v-model="formData.artistName">
+          <option value="klimt">Gustav Klimt</option>
+          <option value="vanGogh">Vincent van Gogh</option>
+        </select>
 
-      <label>Painting location</label>
-      <input type="text" />
+        <label>Review</label>
+        <textarea v-model="formData.reviewText" placeholder="I like this artist because of ..."></textarea>
+      </fieldset>
+      <button>Submit</button>
     </form>
+
+    <ul>
+      <li v-for="(review, index) in reviews" :key="index">
+        <h3> {{ review.userName }} </h3> <span>about {{ review.artistName }}</span>
+        <p> {{ review.reviewText }} </p>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import { mapActions, mapGetters, mapState } from 'vuex';
 
 export default {
   name: 'home',
-  data() {
+  data () {
     return {
-      addFormShown: false,
       formData: {
-        author: '',
-
+        userName: '',
+        artistName: null,
+        reviewText: ''
       }
     }
   },
   methods: {
-    toggleAddForm () {
-      this.addFormShown = !this.addFormShown
-    },
+    ...mapActions([
+      'addReview'
+    ]),
     handleSubmit () {
+      const { userName, artistName, reviewText } = this.formData
+      const review = {
+        userName,
+        artistName,
+        reviewText
+      }
+      this.addReview(review)
 
+      this.formData = {
+        userName: '',
+        artistName: null,
+        reviewText: ''
+      }
     }
+  },
+  computed: {
+    ...mapState([
+      'reviews'
+    ]),
+    ...mapGetters([
+      'paintingsCount',
+      'getOilPaintings'
+    ])
   }
 }
 </script>
+
+<style scoped>
+  .home {
+    align-self: flex-start;
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 1.5fr);
+    grid-gap: 5%;
+    margin: 60px auto 0;
+    width: 70%;
+  }
+
+  h1 {
+    grid-column: 1 / span 2;
+  }
+
+  fieldset {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    border: none;
+  }
+
+  label {
+    font-size: 0.875em;
+    margin-top: 20px;
+    text-align: left;
+  }
+
+  input,
+  select,
+  textarea {
+    border: 1px solid #333;
+    border-radius: 4px;
+    font-size: 1em;
+    margin-top: 4px;
+    padding: 4px 8px;
+  }
+
+  input:focus,
+  textarea:focus {
+    box-shadow: 0 0 2px 1px rgba(0,0,0,0.3);
+  }
+
+  textarea {
+    font-family: inherit;
+    height: 100px;
+    resize: none;
+  }
+
+  button {
+    background: transparent;
+    border: 1px solid #333;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: inherit;
+    height: 42px;
+    margin-top: 20px;
+    padding: 0 60px;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    background: whitesmoke;
+    padding-top: 15px;
+  }
+
+  li {
+    border-bottom: 1px solid #333;
+    margin: 15px 2vw;
+    text-align: left;
+    padding-bottom: 15px;
+  }
+
+  li h3 {
+    margin-bottom: -5px;
+  }
+
+  li span {
+    font-size: 0.875em;
+  }
+
+  li p {
+    margin-top: 10px;
+  }
+</style>

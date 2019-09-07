@@ -2,7 +2,7 @@ export default [
   {
     title: 'A Wheatfield with Cypresses',
     author: 'Vincent van Gogh',
-    medium: 'Oil on canvas',
+    medium: 'Oil, canvas',
     year: 'July 1889',
     dimensions: '73 cm × 93.4 cm',
     location: 'National Gallery, London',
@@ -20,7 +20,7 @@ export default [
   {
     title: 'The Potato Eaters',
     author: 'Vincent van Gogh',
-    medium: 'Oil on canvas',
+    medium: 'Oil, canvas',
     year: '1885',
     dimensions: '82 cm × 114 cm',
     location: 'Van Gogh Museum, Amsterdam',

@@ -2,7 +2,7 @@ export default [
   {
     title: 'The Old Burgtheater',
     author: 'Gustav Klimt',
-    medium: 'Gouache, paper ',
+    medium: 'Gouache, paper',
     year: '1888 - 1889',
     dimensions: '82 cm × 92 cm',
     location: 'Vienna Museum, Vienna',
@@ -11,7 +11,7 @@ export default [
   {
     title: 'Country Garden with Sunflowers',
     author: 'Gustav Klimt',
-    medium: 'Oil, canvas ',
+    medium: 'Oil, canvas',
     year: '1905 - 1906',
     dimensions: '110 cm × 110 cm',
     location: 'Belvedere, Vienna',
@@ -20,7 +20,7 @@ export default [
   {
     title: 'Danae',
     author: 'Gustav Klimt',
-    medium: 'Oil, canvas ',
+    medium: 'Oil, canvas',
     year: '1907 - 1908',
     dimensions: '77 cm × 83 cm',
     location: 'Wurthle Gallery, Vienna',
