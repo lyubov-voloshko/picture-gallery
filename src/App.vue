@@ -15,23 +15,14 @@
 </template>
 
 <script>
+import palette from './assets/palette'
+
 export default {
   name: 'app',
   data () {
     return {
       currentMode: 'light',
-      modes: {
-        dark: {
-          bgColor: '#000',
-          textColor: '#F5F5F5',
-          navBoxShadow: '0 0 8px 1px rgba(255,255,255,0.8)'
-        },
-        light: {
-          bgColor: '#fff',
-          textColor: '#333',
-          navBoxShadow: '0 0 2px 1px rgba(0,0,0,0.3)'
-        }
-      }
+      palette
     }
   },
   methods: {
@@ -46,9 +37,9 @@ export default {
   computed: {
     cssVars () {
       return {
-        '--bg-color': this.modes[this.currentMode].bgColor,
-        '--text-color': this.modes[this.currentMode].textColor,
-        '--box-shadow-nav': this.modes[this.currentMode].navBoxShadow,
+        '--bg-color': this.palette.common[this.currentMode].bgColor,
+        '--text-color': this.palette.common[this.currentMode].textColor,
+        '--box-shadow-nav': this.palette.common[this.currentMode].navBoxShadow
       }
     }
   }

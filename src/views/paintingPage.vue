@@ -31,51 +31,34 @@
 
 <script>
 import { mapState } from 'vuex'
+import palette from './../assets/palette'
 
 export default {
   props: {
     mode: String
   },
   data () {
+    const artistPallete = palette[this.$route.params.author];
     return {
       painting: {},
       tabActive: 'description',
+      palette,
       artistThemes: {
-        vanGogh: {
-          dark: {
-            bgColor: '#2c3e50',
-            bgColorInscription: '#000',
-            textColorInscription: '#D0DFE3',
-            linkColorInscription: '#7C9FBE',
-            boxShadow: 'inset 0 0 4px 1px rgba(255,255,255,0.75)',
-            boxShadowHover: '0 0 3px 2px rgba(255,255,255,0.6)'
-          },
-          light: {
-            bgColor: '#D0DFE3',
-            bgColorInscription: '#fff',
-            textColorInscription: '#2c3e50',
-            linkColorInscription: '#96B8C4',
-            boxShadow: 'inset 0 0 4px 2px rgba(0,0,0,0.3)',
-            boxShadowHover: '0 0 2px 1px rgba(0,0,0,0.3)'
-          }
+        dark: {
+          bgColor: artistPallete.mainColor_heavy,
+          bgColorInscription: palette.common[this.mode].bgColor,
+          textColorInscription: artistPallete.mainColor_light,
+          linkColorInscription: artistPallete.mainColor_accented_light,
+          boxShadow: 'inset 0 0 4px 1px rgba(255,255,255,0.75)',
+          boxShadowHover: '0 0 3px 2px rgba(255,255,255,0.6)'
         },
-        klimt: {
-          dark: {
-            bgColor: '#5f1b00',
-            bgColorInscription: '#000',
-            textColorInscription: '#F9EC88',
-            linkColorInscription: '#f3b75b',
-            boxShadow: 'inset 0 0 4px 1px rgba(255,255,255,0.75)',
-            boxShadowHover: '0 0 3px 2px rgba(255,255,255,0.6)'
-          },
-          light: {
-            bgColor: '#F9EC88',
-            bgColorInscription: '#fff',
-            textColorInscription: '#5f1b00',
-            linkColorInscription: '#cc7f2a',
-            boxShadow: 'inset 0 0 4px 2px rgba(0,0,0,0.3)',
-            boxShadowHover: '0 0 2px 1px rgba(0,0,0,0.3)'
-          }
+        light: {
+          bgColor: artistPallete.mainColor_light,
+          bgColorInscription: palette.common[this.mode].bgColor,
+          textColorInscription: artistPallete.mainColor_heavy,
+          linkColorInscription: artistPallete.mainColor_accented_dark,
+          boxShadow: 'inset 0 0 4px 2px rgba(0,0,0,0.3)',
+          boxShadowHover: '0 0 2px 1px rgba(0,0,0,0.3)'
         }
       }
     }
@@ -86,16 +69,14 @@ export default {
       'klimt'
     ]),
     cssVars () {
-      const cardTheme = this.artistThemes[this.$route.params.author]
-      console.log(this.mode)
-      console.log(cardTheme[this.mode])
+      const cardTheme = this.artistThemes[this.mode]
       return {
-        '--bg-color': cardTheme[this.mode].bgColor,
-        '--bg-color-inscription': cardTheme[this.mode].bgColorInscription,
-        '--text-color-inscription': cardTheme[this.mode].textColorInscription,
-        '--link-color-inscription': cardTheme[this.mode].linkColorInscription,
-        '--box-shadow': cardTheme[this.mode].boxShadow,
-        '--box-shadow-hover': cardTheme[this.mode].boxShadowHover
+        '--bg-color': cardTheme.bgColor,
+        '--bg-color-inscription': cardTheme.bgColorInscription,
+        '--text-color-inscription': cardTheme.textColorInscription,
+        '--link-color-inscription': cardTheme.linkColorInscription,
+        '--box-shadow': cardTheme.boxShadow,
+        '--box-shadow-hover': cardTheme.boxShadowHover
       }
     }
   },
