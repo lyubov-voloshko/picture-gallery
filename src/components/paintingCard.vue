@@ -82,7 +82,6 @@ export default {
     background-size: cover;
     background-position: center center;
     padding-top: 75%;
-    //height: 150px;
     width: 100%;
   }
 

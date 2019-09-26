@@ -38,7 +38,7 @@ export default {
     mode: String
   },
   data () {
-    const artistPallete = palette[this.$route.params.author];
+    const artistPallete = palette[this.$route.params.author]
     return {
       painting: {},
       tabActive: 'description',
