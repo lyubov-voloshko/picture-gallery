@@ -1,6 +1,6 @@
 <template>
   <div id="app" :style="cssVars">
-    <m-top-app-bar>
+    <m-top-app-bar :style="topBarColors">
       <m-typography>
         <m-typo-headline :level="5">
           <router-link to="/">Gallery</router-link>
@@ -78,15 +78,9 @@ export default {
         '--mdc-theme-primary': this.palette.common[this.currentMode].textColor,
       }
     },
-    linkColors () {
+    topBarColors () {
       return {
-        '--mdc-theme-primary': this.palette.common[this.currentMode].textColor,
-      }
-    },
-    buttonColors () {
-      return {
-        '--mdc-theme-primary': this.palette.common[this.currentMode].textColor,
-        '--mdc-theme-on-primary': this.palette.common[this.currentMode].bgColor,
+        '--mdc-theme-primary': this.palette.common[this.currentMode].bgColor,
       }
     }
   }

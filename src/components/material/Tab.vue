@@ -1,7 +1,7 @@
 <template>
   <component
-    :is="href ? 'a' : 'button'"
-    :href="href"
+    :is="href ? 'router-link' : 'button'"
+    :to="href"
     :aria-selected="active"
     :class="classes"
     :tabindex="tabindex"
