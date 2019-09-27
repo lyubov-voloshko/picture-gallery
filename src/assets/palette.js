@@ -3,12 +3,12 @@ export default {
     dark: {
       bgColor: '#000',
       textColor: '#F5F5F5',
-      navBoxShadow: '0 0 8px 1px rgba(255,255,255,0.8)'
+      accentedColor: '#636363'
     },
     light: {
       bgColor: '#fff',
       textColor: '#333',
-      navBoxShadow: '0 0 2px 1px rgba(0,0,0,0.3)'
+      accentedColor: '#f3f3f3'
     }
   },
   klimt: {

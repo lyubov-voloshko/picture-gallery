@@ -105,7 +105,7 @@ export default {
     background: var(--bg-color);
     box-sizing: border-box;
     padding: 42px 5%;
-    height: calc(100vh - 64px);
+    height: calc(100vh - 112px);
     transition: all 400ms ease;
   }
 

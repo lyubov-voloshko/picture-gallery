@@ -53,7 +53,8 @@ export default {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;
-    padding: 0 10%;
+    margin: auto;
+    padding: 1% 15%;
     transition: all 400ms ease;
   }
   header {
@@ -69,7 +70,6 @@ export default {
     line-height: 1.5em;
     margin-top: 30px;
     padding-right: 30px;
-    //width: 60%;
   }
 
   blockquote p {

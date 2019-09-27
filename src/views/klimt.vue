@@ -49,7 +49,8 @@ export default {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;
-    padding: 0 10%;
+    margin: auto;
+    padding: 1% 15%;
     transition: all 400ms ease;
   }
   header {

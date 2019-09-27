@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :style="cssVars">
+  <div id="app" :style="cssVars" class="main">
     <m-top-app-bar :style="topBarColors">
       <m-typography>
         <m-typo-headline :level="5">
@@ -16,13 +16,13 @@
         <m-button unelevated="currentMode === 'light'" :style="buttonColors" @click="switchTheme()">{{ currentMode }} theme</m-button>
       </section>
     </m-top-app-bar>
-    <m-top-app-bar-fixed-adjust>
-      <m-tab-bar scrollable>
+    <m-top-app-bar-fixed-adjust class="stickyContent">
+      <m-tab-bar scrollable :useAutomaticActivation="false" class="tabs" :style="tabsColors">
         <app-m-tab-scroller align="center">
-           <app-tab href="/vanGogh" :minWidth="true">
+           <app-tab href="/vanGogh" :minWidth="true" :active="$route.path === '/vanGogh'">
             van Gogh
           </app-tab>
-          <app-tab href="/klimt" :minWidth="true">
+          <app-tab href="/klimt" :minWidth="true" :active="$route.path === '/klimt'">
             Klimt
           </app-tab> 
         </app-m-tab-scroller>
@@ -63,6 +63,7 @@ export default {
   },
   methods: {
     switchTheme () {
+      console.log(this.$route);
       if (this.currentMode === 'light') {
         this.currentMode = 'dark'
       } else {
@@ -85,6 +86,12 @@ export default {
     topBarColors () {
       return {
         '--mdc-theme-primary': this.palette.common[this.currentMode].bgColor,
+        '--name-color': this.palette.common[this.currentMode].textColor,
+      }
+    },
+    tabsColors () {
+      return {
+      '--tabs-bgcolor': this.palette.common[this.currentMode].accentedColor
       }
     }
   }
@@ -113,28 +120,29 @@ export default {
     min-height: 100vh;
     transition: all 400ms ease;
   }
+
+  .tabs {
+    background: var(--tabs-bgcolor);
+  }
+
   .mdc-top-app-bar__row {
     align-items: center;
     justify-content: space-between;
     padding-left: 16px;
   }
 
-  .actions {
+  .mdc-top-app-bar__row a {
+    color: var(--name-color);
+    text-decoration: none;
+  }
+
+  .main {
+    background: var(--mdc-theme-background);
+  }
+
+  .stickyContent {
     display: flex;
-    align-items: center;
-  }
-
-  .actions a {
-    margin-left: 12px;
-  }
-
-  .actions button {
-    margin-left: 20px;
-  }
-
-  main {
-    display: flex;
-    align-items: center;
+    flex-direction: column;
     flex: 1 0 auto;
   }
 </style>
