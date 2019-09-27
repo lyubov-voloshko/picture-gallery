@@ -18,12 +18,14 @@
     </m-top-app-bar>
     <m-top-app-bar-fixed-adjust>
       <m-tab-bar scrollable>
-        <app-tab href="/vanGogh">
-          van Gogh
-        </app-tab>
-        <app-tab href="/klimt">
-          Klimt
-        </app-tab>
+        <app-m-tab-scroller align="center">
+           <app-tab href="/vanGogh" :minWidth="true">
+            van Gogh
+          </app-tab>
+          <app-tab href="/klimt" :minWidth="true">
+            Klimt
+          </app-tab> 
+        </app-m-tab-scroller>
       </m-tab-bar>
       <router-view :mode="currentMode"/>
     </m-top-app-bar-fixed-adjust>
@@ -33,10 +35,11 @@
 <script>
 import palette from './assets/palette'
 import Button from 'material-components-vue/dist/button'
+import Headline from 'material-components-vue/dist/typography'
 import NavBar from 'material-components-vue/dist/top-app-bar'
 import Icon from 'material-components-vue/dist/icon'
 import TabBar from 'material-components-vue/dist/tabs'
-import Headline from 'material-components-vue/dist/typography'
+import TabScroller from './components/material/TabScroller'
 import Tab from './components/material/Tab'
 import Vue from 'vue'
 
@@ -48,6 +51,7 @@ Vue.use(TabBar)
 Vue.use(Tab)
 
 Vue.component('app-tab', Tab)
+Vue.component('app-m-tab-scroller', TabScroller)
 
 export default {
   name: 'app',
