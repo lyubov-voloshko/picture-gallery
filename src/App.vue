@@ -12,8 +12,6 @@
           icon="invert_colors"
           slot="actions"
           @click="switchTheme()"/>
-
-        <m-button unelevated="currentMode === 'light'" :style="buttonColors" @click="switchTheme()">{{ currentMode }} theme</m-button>
       </section>
     </m-top-app-bar>
     <m-top-app-bar-fixed-adjust class="stickyContent">
@@ -34,6 +32,8 @@
 
 <script>
 import palette from './assets/palette'
+import Vue from 'vue'
+
 import Button from 'material-components-vue/dist/button'
 import Headline from 'material-components-vue/dist/typography'
 import NavBar from 'material-components-vue/dist/top-app-bar'
@@ -41,7 +41,6 @@ import Icon from 'material-components-vue/dist/icon'
 import TabBar from 'material-components-vue/dist/tabs'
 import TabScroller from './components/material/TabScroller'
 import Tab from './components/material/Tab'
-import Vue from 'vue'
 
 Vue.use(Button)
 Vue.use(Headline)
@@ -99,6 +98,11 @@ export default {
 </script>
 
 <style>
+
+
+  @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500");
+  @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
 
   @import url("~material-components-vue/dist/button/button.min.css");
   @import url("~material-components-vue/dist/typography/typography.min.css");

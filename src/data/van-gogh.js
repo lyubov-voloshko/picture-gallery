@@ -31,5 +31,16 @@ export default [
     location: 'Van Gogh Museum, Amsterdam',
     imageURL: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Van-willem-vincent-gogh-die-kartoffelesser-03850.jpg/600px-Van-willem-vincent-gogh-die-kartoffelesser-03850.jpg',
     reviews: []
+  },
+  {
+    id: 2,
+    title: 'Sunflowers',
+    author: 'Vincent van Gogh',
+    medium: 'Oil, canvas',
+    year: '1887',
+    dimensions: '60 cm × 100 cm',
+    location: 'Kröller-Müller Museum, Otterlo',
+    imageURL: 'https://upload.wikimedia.org/wikipedia/commons/6/6f/Four_Withered_Sunflowers.jpg',
+    reviews: []
   }
 ]

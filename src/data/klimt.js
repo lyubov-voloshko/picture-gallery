@@ -34,5 +34,16 @@ export default [
     location: 'Wurthle Gallery, Vienna',
     imageURL: 'https://uploads3.wikiart.org/images/gustav-klimt/danae-1908.jpg!Large.jpg',
     reviews: []
+  },
+  {
+    id: 3,
+    title: 'Church in Cassone',
+    author: 'Gustav Klimt',
+    medium: 'Oil, canvas',
+    year: '1913',
+    dimensions: '110 cm × 110 cm',
+    location: 'Private Collection',
+    imageURL: 'https://sr.gallerix.ru/K/2002691672/693761388.jpg',
+    reviews: []
   }
 ]

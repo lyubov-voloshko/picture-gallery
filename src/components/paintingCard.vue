@@ -1,12 +1,30 @@
 <template>
-  <router-link class="painting" :style="cssVars" :to="`/${this.artist}/${index}`">
-    <div class="painting__img"
-         :style="{backgroundImage: `url(${painting.imageURL})` }"></div>
-    <h3>{{ painting.title }}</h3>
-  </router-link>
+<router-link :to="`/${this.artist}/${index}`">
+  <m-card :style="cssVars">
+        <m-card-primary-action ripple>
+          <m-card-media >
+            <div class="painting__img" :style="{backgroundImage: `url(${painting.imageURL})` }"></div>
+            <m-typography class="painting__title">
+              <m-typo-headline :level="6">
+                {{ painting.title }}
+              </m-typo-headline>
+            </m-typography>
+        </m-card-media>
+      </m-card-primary-action>
+  </m-card>
+    </router-link>
 </template>
 
 <script>
+import palette from '../assets/palette'
+import Vue from 'vue'
+
+import Card from 'material-components-vue/dist/card'
+import Headline from 'material-components-vue/dist/typography'
+
+Vue.use(Card)
+Vue.use(Headline)
+
 export default {
   name: 'Painting',
   props: {
@@ -17,46 +35,14 @@ export default {
   },
   data () {
     return {
-      artistThemes: {
-        vanGogh: {
-          dark: {
-            bgColor: '#2c3e50',
-            textColor: '#D0DFE3',
-            boxShadow: 'inset 0 0 4px 1px rgba(255,255,255,0.75)',
-            boxShadowHover: '0 0 3px 2px rgba(255,255,255,0.6)'
-          },
-          light: {
-            bgColor: '#D0DFE3',
-            textColor: '#2c3e50',
-            boxShadow: 'inset 0 0 4px 2px rgba(0,0,0,0.3)',
-            boxShadowHover: '0 0 2px 1px rgba(0,0,0,0.3)'
-          }
-        },
-        klimt: {
-          dark: {
-            bgColor: '#5f1b00',
-            textColor: '#f3cf7a',
-            boxShadow: 'inset 0 0 4px 1px rgba(255,255,255,0.75)',
-            boxShadowHover: '0 0 3px 2px rgba(255,255,255,0.6)'
-          },
-          light: {
-            bgColor: '#F9EC88',
-            textColor: '#5f1b00',
-            boxShadow: 'inset 0 0 4px 2px rgba(0,0,0,0.3)',
-            boxShadowHover: '0 0 2px 1px rgba(0,0,0,0.3)'
-          }
-        }
-      }
+      palette
     }
   },
   computed: {
     cssVars () {
-      const cardTheme = this.artistThemes[this.artist]
       return {
-        '--bg-color': cardTheme[this.mode].bgColor,
-        '--text-color': cardTheme[this.mode].textColor,
-        '--box-shadow': cardTheme[this.mode].boxShadow,
-        '--box-shadow-hover': cardTheme[this.mode].boxShadowHover
+        '--mdc-theme-surface': this.palette[this.artist].mainColor_light,
+        '--mdc-theme-primary': this.palette[this.artist].mainColor_heavy
       }
     }
   }
@@ -65,28 +51,24 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .painting {
-    background: var(--bg-color);
-    box-shadow: var(--box-shadow);
-    color: var(--text-color);
-    padding: 15px;
-    text-decoration: none;
-    transition: all 400ms;
-  }
-
-  .painting:hover {
-    box-shadow: inset 0 0 0 0 rgba(0,0,0,0), var(--box-shadow-hover);
-  }
+  @import url("~material-components-vue/dist/card/card.min.css");
+  @import url("~material-components-vue/dist/typography/typography.min.css");
 
   .painting__img {
     background-size: cover;
-    background-position: center center;
-    padding-top: 75%;
+    background-position: center 75%;
+    border-radius: 4px 4px 0 0;
+    padding-top: 100%;
     width: 100%;
   }
 
-  .painting h3 {
-    line-height: 1.15em;
-    margin-top: 12px;
+  .painting__title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--mdc-theme-surface);
+    color: var(--mdc-theme-primary);
+    height: 15%;
+    margin-top: -15%;
   }
 </style>
