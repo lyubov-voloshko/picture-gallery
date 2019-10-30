@@ -2,36 +2,55 @@
   <div class="picture" :style="cssVars">
     <img :src=painting.imageURL />
 
-    <div class="info">
-      <div class="tabs">
-        <button class="tab"
-                :class="{ tab_active: isActive('description') }"
-                @click="handleSwitchTab('description')">Description</button>
-        <button class="tab"
-                :class="{ tab_active: isActive('reviews') }"
-                @click="handleSwitchTab('reviews')">Reviews</button>
-      </div>
-      <div class="tabContent" :class="{ tabContent_active: isActive('description') }">
-        <h1>{{ painting.title }}</h1><span>painted in {{ painting.year }}</span>
-        <p class="paintedBy">by <router-link :to="`/${$route.params.author}`" class="authorName">{{ painting.author }}</router-link></p>
-        <p>{{ painting.medium }}</p>
-        <p>{{ painting.location }}</p>
-      </div>
-      <div class="tabContent tabContent_floating" :class="{ tabContent_active: isActive('reviews') }">
-        <ul class="reviews">
-          <li v-for="(review, index) in painting.reviews" :key="index" class="review">
-            <h3> {{ review.userName }} </h3>
-            <p> {{ review.reviewText }} </p>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <m-card>
+      <m-primary-action>
+          <m-tab-bar>
+            <app-m-tab-scroller class="tabs">
+              <app-tab @click.native="handleSwitchTab('description')" :minWidth="true" :active="isActive('description')">
+                Description
+              </app-tab>
+              <app-tab @click.native="handleSwitchTab('reviews')" :minWidth="true" :active="isActive('reviews')">
+                Reviews
+              </app-tab> 
+            </app-m-tab-scroller>
+          </m-tab-bar>
+      </m-primary-action>
+        <div class="tabContent" :class="{ tabContent_active: isActive('description') }">
+          <m-typography class="tabInfo">
+            <m-typo-headline :level="5" class="tabInfo__title">{{ painting.title }}</m-typo-headline>
+            <m-typo-body :level="1">painted in {{ painting.year }}</m-typo-body>
+            <m-typo-body :level="1" class="tabInfo__author">
+              by <router-link :to="`/${$route.params.author}`" class="authorName">{{ painting.author }}</router-link>
+            </m-typo-body>
+            <m-typo-body :level="1">{{ painting.medium }}</m-typo-body>
+            <m-typo-body :level="1">{{ painting.location }}</m-typo-body>            
+          </m-typography>
+        </div>
+        <div class="tabContent tabContent_floating" :class="{ tabContent_active: isActive('reviews') }">
+          <ul class="reviews">
+            <li v-for="(review, index) in painting.reviews" :key="index" class="review">
+              <h3> {{ review.userName }} </h3>
+              <p> {{ review.reviewText }} </p>
+            </li>
+          </ul>
+        </div>
+    </m-card>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
+
 import { mapState } from 'vuex'
 import palette from './../assets/palette'
+
+import Card from 'material-components-vue/dist/card'
+import Headline from 'material-components-vue/dist/typography'
+import Body from 'material-components-vue/dist/typography'
+
+Vue.use(Card)
+Vue.use(Headline)
+Vue.use(Body)
 
 export default {
   props: {
@@ -43,22 +62,15 @@ export default {
       painting: {},
       tabActive: 'description',
       palette,
+      artist: this.$route.params.author,
       artistThemes: {
         dark: {
           bgColor: artistPallete.mainColor_heavy,
-          bgColorInscription: palette.common[this.mode].bgColor,
-          textColorInscription: artistPallete.mainColor_light,
-          linkColorInscription: artistPallete.mainColor_accented_light,
-          boxShadow: 'inset 0 0 4px 1px rgba(255,255,255,0.75)',
-          boxShadowHover: '0 0 3px 2px rgba(255,255,255,0.6)'
+          linkColor: artistPallete.mainColor_accented_light,
         },
         light: {
           bgColor: artistPallete.mainColor_light,
-          bgColorInscription: palette.common[this.mode].bgColor,
-          textColorInscription: artistPallete.mainColor_heavy,
-          linkColorInscription: artistPallete.mainColor_accented_dark,
-          boxShadow: 'inset 0 0 4px 2px rgba(0,0,0,0.3)',
-          boxShadowHover: '0 0 2px 1px rgba(0,0,0,0.3)'
+          linkColor: artistPallete.mainColor_accented_dark,
         }
       }
     }
@@ -69,14 +81,12 @@ export default {
       'klimt'
     ]),
     cssVars () {
-      const cardTheme = this.artistThemes[this.mode]
+      const cardTheme = this.artistThemes[this.mode];
       return {
+        '--mdc-theme-surface': this.palette.common[this.mode].bgColor,
+        '--mdc-theme-primary': this.palette.common[this.mode].textColor,
         '--bg-color': cardTheme.bgColor,
-        '--bg-color-inscription': cardTheme.bgColorInscription,
-        '--text-color-inscription': cardTheme.textColorInscription,
-        '--link-color-inscription': cardTheme.linkColorInscription,
-        '--box-shadow': cardTheme.boxShadow,
-        '--box-shadow-hover': cardTheme.boxShadowHover
+        '--link-color-inscription': cardTheme.linkColor
       }
     }
   },
@@ -97,6 +107,9 @@ export default {
 </script>
 
 <style scoped>
+  @import url("~material-components-vue/dist/card/card.min.css");
+  @import url("~material-components-vue/dist/typography/typography.min.css");
+
   .picture {
     flex: 1 0 auto;
     display: flex;
@@ -104,39 +117,14 @@ export default {
     justify-content: space-around;
     background: var(--bg-color);
     box-sizing: border-box;
+    color: var(--mdc-theme-primary);
     padding: 42px 5%;
     height: calc(100vh - 112px);
     transition: all 400ms ease;
   }
 
-  .info {
-    position: relative;
-    background: var(--bg-color-inscription);
-    box-shadow: 1px 1px 2px 1px rgba(0,0,0,0.2);
-    color: var(--text-color-inscription);
-    padding: 0 20px 30px;
-    text-align: right;
-    transition: all 400ms ease;
-  }
-
-  .tabs {
-    display: flex;
-    width: 100%;
-  }
-
-  .tab {
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid transparent;
-    height: 32px;
-    margin: 10px 20px 0 0;
-  }
-
-  .tab_active {
-    border-bottom: 1px solid var(--text-color-inscription);
-  }
-
   .tabContent {
+    padding: 24px;
     float: left;
     clear: both;
     opacity: 0;
@@ -153,6 +141,20 @@ export default {
     opacity: 1;
   }
 
+  .tabInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end
+  }
+
+  .tabInfo__title {
+    margin-bottom: 8px;
+  }
+
+  .tabInfo__author {
+    margin-bottom: 20px;
+  }
+
   .review {
     margin-left: 0;
     text-align: left;
@@ -161,15 +163,6 @@ export default {
   img {
     box-shadow: 1px 1px 3px 1px rgba(0,0,0,0.3);
     height: 100%;
-  }
-
-  h1 {
-    font-size: 1.5em;
-    margin: 25px 0 5px;
-  }
-
-  .paintedBy {
-    margin-bottom: 25px;
   }
 
   .authorName {

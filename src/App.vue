@@ -8,19 +8,19 @@
       </m-typography>
 
       <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
-      <m-icon
-          icon="invert_colors"
-          slot="actions"
-          @click="switchTheme()"/>
+        <m-icon-button icon="invert_colors" @click="switchTheme()">
+          <m-icon icon="invert_colors" />
+        </m-icon-button>
       </section>
     </m-top-app-bar>
+    
     <m-top-app-bar-fixed-adjust class="stickyContent">
       <m-tab-bar scrollable :useAutomaticActivation="false" class="tabs" :style="tabsColors">
         <app-m-tab-scroller align="center">
-           <app-tab href="/vanGogh" :minWidth="true" :active="$route.path === '/vanGogh'">
+           <app-tab href="/vanGogh" :minWidth="true" :active="$route.path.startsWith('/vanGogh')">
             van Gogh
           </app-tab>
-          <app-tab href="/klimt" :minWidth="true" :active="$route.path === '/klimt'">
+          <app-tab href="/klimt" :minWidth="true" :active="$route.path.startsWith('/klimt')">
             Klimt
           </app-tab> 
         </app-m-tab-scroller>
@@ -37,7 +37,8 @@ import Vue from 'vue'
 import Button from 'material-components-vue/dist/button'
 import Headline from 'material-components-vue/dist/typography'
 import NavBar from 'material-components-vue/dist/top-app-bar'
-import Icon from 'material-components-vue/dist/icon'
+import IconButton from 'material-components-vue/dist/icon-button'
+import Icon from 'material-components-vue/dist/icon-button'
 import TabBar from 'material-components-vue/dist/tabs'
 import TabScroller from './components/material/TabScroller'
 import Tab from './components/material/Tab'
@@ -45,6 +46,7 @@ import Tab from './components/material/Tab'
 Vue.use(Button)
 Vue.use(Headline)
 Vue.use(NavBar)
+Vue.use(IconButton)
 Vue.use(Icon)
 Vue.use(TabBar)
 Vue.use(Tab)
@@ -107,6 +109,7 @@ export default {
   @import url("~material-components-vue/dist/button/button.min.css");
   @import url("~material-components-vue/dist/typography/typography.min.css");
   @import url("~material-components-vue/dist/top-app-bar/top-app-bar.min.css");
+  @import url("~material-components-vue/dist/icon-button/icon-button.min.css");
   @import url("~material-components-vue/dist/tabs/tabs.min.css");
   
   * {
@@ -127,6 +130,10 @@ export default {
 
   .tabs {
     background: var(--tabs-bgcolor);
+  }
+
+  .mdc-top-app-bar {
+    color: var(--name-color) !important;
   }
 
   .mdc-top-app-bar__row {
