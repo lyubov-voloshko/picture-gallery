@@ -2,7 +2,7 @@
   <div class="picture" :style="cssVars">
     <img :src=painting.imageURL />
 
-    <m-card>
+    <m-card class="pictureInfo">
       <m-primary-action>
           <m-tab-bar>
             <app-m-tab-scroller class="tabs">
@@ -26,13 +26,14 @@
             <m-typo-body :level="1">{{ painting.location }}</m-typo-body>            
           </m-typography>
         </div>
+        
         <div class="tabContent tabContent_floating" :class="{ tabContent_active: isActive('reviews') }">
-          <ul class="reviews">
-            <li v-for="(review, index) in painting.reviews" :key="index" class="review">
-              <h3> {{ review.userName }} </h3>
-              <p> {{ review.reviewText }} </p>
-            </li>
-          </ul>
+          <m-list two-line nonInteractive class="paintingReviews">
+              <m-list-item tabindex="0" v-for="(review, index) in painting.reviews" :key="index" class="listItem">
+                  <template slot="primaryText">{{ review.userName }}</template>
+                  <template slot="secondaryText">{{ review.reviewText }}</template>
+              </m-list-item>
+          </m-list>
         </div>
     </m-card>
   </div>
@@ -47,10 +48,12 @@ import palette from './../assets/palette'
 import Card from 'material-components-vue/dist/card'
 import Headline from 'material-components-vue/dist/typography'
 import Body from 'material-components-vue/dist/typography'
+import List from 'material-components-vue/dist/list'
 
 Vue.use(Card)
 Vue.use(Headline)
 Vue.use(Body)
+Vue.use(List)
 
 export default {
   props: {
@@ -86,7 +89,9 @@ export default {
         '--mdc-theme-surface': this.palette.common[this.mode].bgColor,
         '--mdc-theme-primary': this.palette.common[this.mode].textColor,
         '--bg-color': cardTheme.bgColor,
-        '--link-color-inscription': cardTheme.linkColor
+        '--link-color-inscription': cardTheme.linkColor,
+        '--mdc-theme-text-primary-on-background': cardTheme.linkColor,
+        '--mdc-theme-text-secondary-on-background': this.palette.common[this.mode].textColor
       }
     }
   },
@@ -109,6 +114,7 @@ export default {
 <style scoped>
   @import url("~material-components-vue/dist/card/card.min.css");
   @import url("~material-components-vue/dist/typography/typography.min.css");
+  @import url("~material-components-vue/dist/list/list.min.css");
 
   .picture {
     flex: 1 0 auto;
@@ -123,6 +129,10 @@ export default {
     transition: all 400ms ease;
   }
 
+  .pictureInfo {
+    position: relative;
+  }
+
   .tabContent {
     padding: 24px;
     float: left;
@@ -134,7 +144,11 @@ export default {
   .tabContent_floating {
     position: absolute;
     top: 60px;
-    left: 20px;
+    left: 0;
+    height: calc(100% - 60px);
+    overflow: scroll;
+    padding: 0;
+    width: 100%;
   }
 
   .tabContent_active {
@@ -155,8 +169,7 @@ export default {
     margin-bottom: 20px;
   }
 
-  .review {
-    margin-left: 0;
+  .listItem {
     text-align: left;
   }
 
@@ -170,4 +183,12 @@ export default {
     font-weight: 500;
   }
 
+</style>
+
+<style>
+  .paintingReviews .mdc-list-item__secondary-text {
+    text-overflow: unset;
+    white-space: initial !important;
+    overflow: unset;
+  }
 </style>

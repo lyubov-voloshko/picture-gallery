@@ -11,6 +11,14 @@ export default [
     reviews: [{
       userName: 'Kate',
       reviewText: 'Such amazing early painting!'
+    },
+    {
+      userName: 'Kate',
+      reviewText: 'Such amazing early painting! Such amazing early painting! Such amazing early painting! Such amazing early painting! Such amazing early painting!'
+    },
+    {
+      userName: 'Kate',
+      reviewText: 'Such amazing early painting! Such amazing early painting! Such amazing early painting! Such amazing early painting! Such amazing early painting!'
     }]
   },
   {

@@ -3,12 +3,14 @@ export default {
     dark: {
       bgColor: '#000',
       textColor: '#F5F5F5',
-      accentedColor: '#636363'
+      accentedColor: '#636363',
+      extinguishedColor: '#333'
     },
     light: {
       bgColor: '#fff',
       textColor: '#333',
-      accentedColor: '#f3f3f3'
+      accentedColor: '#f3f3f3',
+      extinguishedColor: '#fafafa'
     }
   },
   klimt: {
