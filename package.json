@@ -2,9 +2,6 @@
   "name": "picture-gallery",
   "version": "0.1.0",
   "private": true,
-  "vue": {
-    "publicPath": "/picture-gallery/"
-  },
   "scripts": {
     "serve": "vue-cli-service serve --port=8082",
     "build": "vue-cli-service build",
