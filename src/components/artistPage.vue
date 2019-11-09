@@ -9,9 +9,9 @@
       <blockquote v-html="artistQuotes"></blockquote>
     </div>
     <div class="paitingsSet">
-      <Painting v-for="(painting, index) in this.$store.state[artist]"
+      <Painting v-for="(painting, index) in currentArtistPainitings"
         :key="index"
-        :index="index"
+        :index="painting.id"
         :painting="painting"
         :artist="artist"
         :mode="mode"
@@ -23,7 +23,7 @@
 <script>
 import palette from '../assets/palette'
 import Vue from 'vue'
-import { mapState } from 'vuex'
+import { mapActions, mapMutations, mapState } from 'vuex';
 
 import Painting from '../components/paintingCard'
 
@@ -49,6 +49,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['currentArtistPainitings',]),
     cssVars () {
       if (this.mode === 'light') {
       return {
@@ -59,6 +60,12 @@ export default {
         '--mdc-theme-primary': this.palette[this.artist].mainColor_light
       }
     }
+  },
+  methods: {
+    ...mapActions(['getPaintings']),
+  },
+  mounted () {
+    this.getPaintings(this.artist);
   }
 }
 </script>

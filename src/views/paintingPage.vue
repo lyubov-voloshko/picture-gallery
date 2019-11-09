@@ -1,6 +1,6 @@
 <template>
   <div class="picture" :style="cssVars">
-    <img :src=painting.imageURL />
+    <img :src=currentPainiting.imageURL />
 
     <m-card class="pictureInfo">
       <m-primary-action>
@@ -17,13 +17,13 @@
       </m-primary-action>
         <div class="tabContent" :class="{ tabContent_active: isActive('description') }">
           <m-typography class="tabInfo">
-            <m-typo-headline :level="5" class="tabInfo__title">{{ painting.title }}</m-typo-headline>
-            <m-typo-body :level="1">painted in {{ painting.year }}</m-typo-body>
+            <m-typo-headline :level="5" class="tabInfo__title">{{ currentPainiting.title }}</m-typo-headline>
+            <m-typo-body :level="1">painted in {{ currentPainiting.year }}</m-typo-body>
             <m-typo-body :level="1" class="tabInfo__author">
-              by <router-link :to="`/${$route.params.author}`" class="authorName">{{ painting.author }}</router-link>
+              by <router-link :to="`/${$route.params.author}`" class="authorName">{{ currentPainiting.artist.name }}</router-link>
             </m-typo-body>
-            <m-typo-body :level="1">{{ painting.medium }}</m-typo-body>
-            <m-typo-body :level="1">{{ painting.location }}</m-typo-body>            
+            <m-typo-body :level="1">{{ currentPainiting.medium }}</m-typo-body>
+            <m-typo-body :level="1">{{ currentPainiting.location }}</m-typo-body>            
           </m-typography>
         </div>
         
@@ -42,7 +42,7 @@
 <script>
 import Vue from 'vue'
 
-import { mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import palette from './../assets/palette'
 
 import Card from 'material-components-vue/dist/card'
@@ -79,10 +79,7 @@ export default {
     }
   },
   computed: {
-    ...mapState([
-      'vanGogh',
-      'klimt'
-    ]),
+    ...mapState(['currentPainiting']),
     cssVars () {
       const cardTheme = this.artistThemes[this.mode];
       return {
@@ -96,6 +93,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['getPainting']),
     handleSwitchTab (type) {
       this.tabActive = type
     },
@@ -106,7 +104,7 @@ export default {
     }
   },
   mounted () {
-    this.painting = this[this.$route.params.author][this.$route.params.id]
+    this.getPainting(this.$route.params.id);
   }
 }
 </script>
@@ -145,6 +143,7 @@ export default {
     position: absolute;
     top: 60px;
     left: 0;
+    display: none;
     height: calc(100% - 60px);
     overflow: scroll;
     padding: 0;
@@ -152,6 +151,7 @@ export default {
   }
 
   .tabContent_active {
+    display: initial;
     opacity: 1;
   }
 

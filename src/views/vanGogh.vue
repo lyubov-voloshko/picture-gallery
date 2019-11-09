@@ -21,6 +21,7 @@
 <script>
 import Vue from 'vue'
 import Artist from '../components/artistPage'
+import { mapActions, mapMutations, mapState } from 'vuex';
 
 export default {
   props: {
@@ -28,6 +29,15 @@ export default {
   },
   components: {
     Artist
+  },
+  computed: {
+    ...mapState(['testPaintings',]),
+  },
+  methods: {
+    ...mapActions(['getPaintings']),
+  },
+  mounted () {
+    this.getPaintings('vanGogh');
   }
 }
 </script>

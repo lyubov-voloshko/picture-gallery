@@ -6,14 +6,16 @@
     "serve": "vue-cli-service serve --port=8082",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "deploy": "gh-pages -d dist"
+    "deploy": "echo 'marvelous.gallery' > dist/CNAME && gh-pages -d dist"
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "firebase": "^7.3.0",
     "material-components-vue": "^1.1.0",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "vuexfire": "^3.2.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",

@@ -8,4 +8,6 @@ export default {
       return painting.medium === 'Oil, canvas'
     });
   }
+
+  
 }
