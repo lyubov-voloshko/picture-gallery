@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --port=8082",
+    "serve": "vue-cli-service serve --port=4040",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "deploy": "echo 'marvelous.gallery' > dist/CNAME && gh-pages -d dist"
+    "deploy": "echo 'marvelous.gallery' > dist/CNAME && cp dist/index.html dist/404.html && gh-pages -d dist"
   },
   "dependencies": {
     "core-js": "^2.6.5",

@@ -4,7 +4,7 @@
       <m-typo-headline :level="4">Amazing Picture Gallery</m-typo-headline>
     </m-typography>
 
-    <form @submit.prevent="submitReview">
+    <form @submit.prevent="submitReview" id="user-review-form">
       <m-text-field v-model="formData.userName" id="user-name">
         <m-floating-label for="user-name">Your Name</m-floating-label>
         <m-line-ripple slot="bottomLine"/>
@@ -195,11 +195,10 @@ export default {
 
   .home {
     display: grid;
-    grid-template-columns: 1fr, 1fr;
-    grid-gap: 20px;
+    grid-template-columns: 1fr;
     align-items: flex-start;
     margin: 60px auto 0;
-    width: 70%;
+    width: 40%;
   }
 
   .title {
@@ -242,5 +241,13 @@ export default {
 
   button {
     margin-left: auto;
+  }
+
+  #user-review-form {
+    display: none;
+  }
+
+  #painting-form {
+    display: none;
   }
 </style>
