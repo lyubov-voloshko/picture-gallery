@@ -1,5 +1,5 @@
 <template>
-  <div v-if="currentPainiting" class="picture" :style="cssVars">
+  <div v-if="currentPainiting" class="painting" :style="cssVars">
     <img :src=currentPainiting.imageURL />
 
     <m-card class="pictureInfo">
@@ -109,17 +109,18 @@ export default {
   @import url("~material-components-vue/dist/typography/typography.min.css");
   @import url("~material-components-vue/dist/list/list.min.css");
 
-  .picture {
-    flex: 1 0 auto;
+  .painting {
+    position: fixed;
+    top: 200px;
     display: flex;
     align-items: flex-end;
     justify-content: space-around;
-    background: var(--bg-color);
     box-sizing: border-box;
     color: var(--mdc-theme-primary);
-    padding: 42px 5%;
-    height: calc(100vh - 112px);
+    padding: 0 5% 42px;
+    height: calc(100vh - 212px);
     transition: all 400ms ease;
+    width: 100%;
   }
 
   .pictureInfo {

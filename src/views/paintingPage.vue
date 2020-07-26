@@ -1,13 +1,14 @@
 <template>
-  <div>
-    <div>
+  <div class="paintingWall" :style="cssVars">
+    <ul class="paintingNav">
       <router-link v-for="(painting) in currentArtistPainitings"
         class="link"
+        :class="{ link_active: painting.id === $route.params.id}"
         :key="painting.id"
         :to="`/${artist}/${painting.id}`">
         {{painting.title}}
       </router-link>
-    </div>
+    </ul>
 
     <transition name="painting-router-animation">
       <router-view
@@ -73,7 +74,8 @@ export default {
         '--mdc-theme-surface': this.palette.common[this.mode].bgColor,
         '--mdc-theme-primary': this.palette.common[this.mode].textColor,
         '--bg-color': cardTheme.bgColor,
-        '--link-color-inscription': cardTheme.linkColor,
+        '--link-color': this.mode === 'light' ? this.palette[this.artist].mainColor_heavy : this.palette[this.artist].mainColor_light,
+        // '--link-color-active': this.mode === 'light' ? this.palette[this.artist].mainColor_heavy : this.palette[this.artist].mainColor_light,
         '--mdc-theme-text-primary-on-background': cardTheme.linkColor,
         '--mdc-theme-text-secondary-on-background': this.palette.common[this.mode].textColor
       }
@@ -94,13 +96,44 @@ export default {
   @import url("~material-components-vue/dist/typography/typography.min.css");
   @import url("~material-components-vue/dist/list/list.min.css");
 
+  .paintingWall {
+    flex: 1 0 auto;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: space-around; */
+    background: var(--bg-color);
+    max-height: calc(100vh - 112px);
+  }
+
+  .paintingNav {
+    flex-shrink: 0;
+    list-style: none;
+    padding: 20px 0;
+  }
+
   .link {
+    color: var(--link-color);
     padding: 0 10px;
+    text-decoration: none;
+  }
+
+  .link:hover {
+    color: var(--mdc-theme-text-primary-on-background);
+  }
+
+  .link_active {
+    /* font-weight: 600; */
+    text-shadow: 1px 0 var(--link-color)
+  }
+
+  .link_active:hover {
+    text-shadow: 1px 0 var(--mdc-theme-text-primary-on-background)
   }
 
   .painting-router-animation-enter-active {
     animation: fade-in 1s;
     animation-delay: 0.5s;
+    animation-fill-mode: forwards;
     opacity: 0;
   }
 
@@ -109,15 +142,22 @@ export default {
   }
 
   @keyframes fade-in {
+    from {
+      transform: translateY(100%);
+    }
     to {
-      transform: translateX(-50px);
+      transform: translateY(0);
       opacity: 1;
     }
   }
 
   @keyframes fade-out {
+    from {
+      transform: translateY(0);
+      opacity: 1;
+    }
     to {
-      transform: translateX(-50px);
+      transform: translateY(100%);
       opacity: 0;
     }
   }
