@@ -7,7 +7,7 @@ export default {
   },
 
   getArtists: firestoreAction(({ bindFirestoreRef }) => {
-    console.log('bring artists');
+    console.log('bring artists')
     return bindFirestoreRef('artists', db.collection('artists'))
   }),
 
@@ -15,13 +15,15 @@ export default {
     return bindFirestoreRef('currentPainiting', db.collection('paintings').doc(id))
   }),
 
-  getPaintings: firestoreAction(({ bindFirestoreRef }, artist) => {
-    var artistRef = db.collection('artists').doc(artist);
+  getPaintings: firestoreAction(function ({ bindFirestoreRef }, artist) {
+    console.log('action get paintings', artist)
+    var artistRef = db.collection('artists').doc(artist)
+    console.log('action get paintings', artistRef)
     return bindFirestoreRef('currentArtistPainitings', db.collection('paintings').where('artist', '==', artistRef))
   }),
 
   addPainting: firestoreAction(({ bindFirestoreRef }, painting) => {
-    painting.artist = db.collection('artists').doc(painting.artist);
+    painting.artist = db.collection('artists').doc(painting.artist)
     return db.collection('paintings').add(painting)
   })
 }

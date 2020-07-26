@@ -1,5 +1,5 @@
 <template>
-<router-link :to="`/${this.artist}/${index}`">
+<router-link :to="`/${this.artist}/${id}`">
   <m-card :style="cssVars">
         <m-card-primary-action ripple>
           <m-card-media >
@@ -12,7 +12,7 @@
         </m-card-media>
       </m-card-primary-action>
   </m-card>
-    </router-link>
+</router-link>
 </template>
 
 <script>
@@ -28,7 +28,7 @@ Vue.use(Headline)
 export default {
   name: 'Painting',
   props: {
-    index: Number,
+    id: String,
     artist: String,
     mode: String,
     painting: Object

@@ -1,20 +1,27 @@
 <template>
-  <div class="picture" :style="cssVars">
-    <img :src=currentPainiting.imageURL />
+  <div>
+    <!-- <div>
+      <router-link v-for="(painting) in currentArtistPainitings"
+        :key="painting.id"
+        :to="`/${artist}/${painting.id}`">
+        {{painting.title}}
+      </router-link>
+    </div> -->
 
-    <m-card class="pictureInfo">
-      <m-primary-action>
-          <m-tab-bar>
-            <app-m-tab-scroller class="tabs">
-              <app-tab @click.native="handleSwitchTab('description')" :minWidth="true" :active="isActive('description')">
-                Description
-              </app-tab>
-              <app-tab @click.native="handleSwitchTab('reviews')" :minWidth="true" :active="isActive('reviews')">
-                Reviews
-              </app-tab> 
-            </app-m-tab-scroller>
-          </m-tab-bar>
-      </m-primary-action>
+    <div v-if="currentPainiting && currentPainiting.artist" class="picture" :style="cssVars">
+      <img :src=currentPainiting.imageURL />
+
+      <m-card class="pictureInfo">
+        <m-tab-bar>
+          <app-m-tab-scroller class="tabs">
+            <app-tab @click.native="handleSwitchTab('description')" :minWidth="true" :active="isActive('description')">
+              Description
+            </app-tab>
+            <app-tab @click.native="handleSwitchTab('reviews')" :minWidth="true" :active="isActive('reviews')">
+              Reviews
+            </app-tab>
+          </app-m-tab-scroller>
+        </m-tab-bar>
         <div class="tabContent" :class="{ tabContent_active: isActive('description') }">
           <m-typography class="tabInfo">
             <m-typo-headline :level="5" class="tabInfo__title">{{ currentPainiting.title }}</m-typo-headline>
@@ -23,10 +30,10 @@
               by <router-link :to="`/${$route.params.author}`" class="authorName">{{ currentPainiting.artist.name }}</router-link>
             </m-typo-body>
             <m-typo-body :level="1">{{ currentPainiting.medium }}</m-typo-body>
-            <m-typo-body :level="1">{{ currentPainiting.location }}</m-typo-body>            
+            <m-typo-body :level="1">{{ currentPainiting.location }}</m-typo-body>
           </m-typography>
         </div>
-        
+
         <div class="tabContent tabContent_floating" :class="{ tabContent_active: isActive('reviews') }">
           <m-list two-line nonInteractive class="paintingReviews">
               <m-list-item tabindex="0" v-for="(review, index) in painting.reviews" :key="index" class="listItem">
@@ -35,8 +42,10 @@
               </m-list-item>
           </m-list>
         </div>
-    </m-card>
+      </m-card>
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -69,19 +78,19 @@ export default {
       artistThemes: {
         dark: {
           bgColor: artistPallete.mainColor_heavy,
-          linkColor: artistPallete.mainColor_accented_light,
+          linkColor: artistPallete.mainColor_accented_light
         },
         light: {
           bgColor: artistPallete.mainColor_light,
-          linkColor: artistPallete.mainColor_accented_dark,
+          linkColor: artistPallete.mainColor_accented_dark
         }
       }
     }
   },
   computed: {
-    ...mapState(['currentPainiting']),
+    ...mapState(['currentPainiting', 'currentArtistPainitings']),
     cssVars () {
-      const cardTheme = this.artistThemes[this.mode];
+      const cardTheme = this.artistThemes[this.mode]
       return {
         '--mdc-theme-surface': this.palette.common[this.mode].bgColor,
         '--mdc-theme-primary': this.palette.common[this.mode].textColor,
@@ -93,8 +102,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getPainting']),
+    ...mapActions(['getPainting', 'getPaintings']),
     handleSwitchTab (type) {
+      // this.getPaintings(this.$route.params.author)
       this.tabActive = type
     },
     isActive (type) {
@@ -103,8 +113,10 @@ export default {
       }
     }
   },
-  mounted () {
-    this.getPainting(this.$route.params.id);
+  mounted: function () {
+    this.getPainting(this.$route.params.id)
+    console.log(this)
+    this.getPaintings(this.$route.params.author)
   }
 }
 </script>

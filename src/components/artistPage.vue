@@ -8,10 +8,11 @@
       </m-typography>
       <blockquote v-html="artistQuotes"></blockquote>
     </div>
+
     <div class="paitingsSet">
       <Painting v-for="(painting, index) in currentArtistPainitings"
         :key="index"
-        :index="painting.id"
+        :id="painting.id"
         :painting="painting"
         :artist="artist"
         :mode="mode"
@@ -23,7 +24,7 @@
 <script>
 import palette from '../assets/palette'
 import Vue from 'vue'
-import { mapActions, mapMutations, mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex'
 
 import Painting from '../components/paintingCard'
 
@@ -36,7 +37,7 @@ Vue.use(Headline)
 export default {
   props: {
     artistName: String,
-    artistQuotes: String, 
+    artistQuotes: String,
     artist: String,
     mode: String
   },
@@ -49,23 +50,26 @@ export default {
     }
   },
   computed: {
-    ...mapState(['currentArtistPainitings',]),
+    ...mapState(['currentArtistPainitings']),
     cssVars () {
       if (this.mode === 'light') {
-      return {
-        '--mdc-theme-surface': this.palette[this.artist].mainColor_accented_dark,
-        '--mdc-theme-primary': this.palette[this.artist].mainColor_heavy
-      }} else return {
-        '--mdc-theme-surface': this.palette[this.artist].mainColor_heavy,
-        '--mdc-theme-primary': this.palette[this.artist].mainColor_light
+        return {
+          '--mdc-theme-surface': this.palette[this.artist].mainColor_accented_dark,
+          '--mdc-theme-primary': this.palette[this.artist].mainColor_heavy
+        }
+      } else {
+        return {
+          '--mdc-theme-surface': this.palette[this.artist].mainColor_heavy,
+          '--mdc-theme-primary': this.palette[this.artist].mainColor_light
+        }
       }
     }
   },
   methods: {
-    ...mapActions(['getPaintings']),
+    ...mapActions(['getPaintings'])
   },
   mounted () {
-    this.getPaintings(this.artist);
+    this.getPaintings(this.artist)
   }
 }
 </script>
@@ -84,7 +88,9 @@ export default {
   }
   .mainCard {
     background: var(--mdc-theme-surface);
+    box-sizing: border-box;
     color: var(--mdc-theme-primary);
+    height: 290px;
     text-align: left;
     padding: 32px 5%;
   }

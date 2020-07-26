@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <Artist              
+  <div class="page">
+    <Artist
       :artistName="'Vincent van Gogh'"
       :artistQuotes = "`<b>The laws of the colours are unutterably beautiful, just because they are not accidentals.</b>
       <p class='paragraph'>

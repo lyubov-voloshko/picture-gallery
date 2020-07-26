@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <Artist              
+  <div class="page">
+    <Artist
       :artistName="'Gustav Klimt'"
       :artistQuotes = "`<b>All art is erotic.</b>
         <p>
