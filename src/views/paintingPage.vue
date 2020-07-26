@@ -1,49 +1,21 @@
 <template>
   <div>
-    <!-- <div>
+    <div>
       <router-link v-for="(painting) in currentArtistPainitings"
+        class="link"
         :key="painting.id"
         :to="`/${artist}/${painting.id}`">
         {{painting.title}}
       </router-link>
-    </div> -->
-
-    <div v-if="currentPainiting && currentPainiting.artist" class="picture" :style="cssVars">
-      <img :src=currentPainiting.imageURL />
-
-      <m-card class="pictureInfo">
-        <m-tab-bar>
-          <app-m-tab-scroller class="tabs">
-            <app-tab @click.native="handleSwitchTab('description')" :minWidth="true" :active="isActive('description')">
-              Description
-            </app-tab>
-            <app-tab @click.native="handleSwitchTab('reviews')" :minWidth="true" :active="isActive('reviews')">
-              Reviews
-            </app-tab>
-          </app-m-tab-scroller>
-        </m-tab-bar>
-        <div class="tabContent" :class="{ tabContent_active: isActive('description') }">
-          <m-typography class="tabInfo">
-            <m-typo-headline :level="5" class="tabInfo__title">{{ currentPainiting.title }}</m-typo-headline>
-            <m-typo-body :level="1">painted in {{ currentPainiting.year }}</m-typo-body>
-            <m-typo-body :level="1" class="tabInfo__author">
-              by <router-link :to="`/${$route.params.author}`" class="authorName">{{ currentPainiting.artist.name }}</router-link>
-            </m-typo-body>
-            <m-typo-body :level="1">{{ currentPainiting.medium }}</m-typo-body>
-            <m-typo-body :level="1">{{ currentPainiting.location }}</m-typo-body>
-          </m-typography>
-        </div>
-
-        <div class="tabContent tabContent_floating" :class="{ tabContent_active: isActive('reviews') }">
-          <m-list two-line nonInteractive class="paintingReviews">
-              <m-list-item tabindex="0" v-for="(review, index) in painting.reviews" :key="index" class="listItem">
-                  <template slot="primaryText">{{ review.userName }}</template>
-                  <template slot="secondaryText">{{ review.reviewText }}</template>
-              </m-list-item>
-          </m-list>
-        </div>
-      </m-card>
     </div>
+
+    <transition name="painting-router-animation">
+      <router-view
+        v-bind:key="$route.params.id"
+        v-if="currentPainiting"
+        :mode="mode"
+        :currentPainiting="currentPainiting"/>
+    </transition>
   </div>
 
 </template>
@@ -65,6 +37,7 @@ Vue.use(Body)
 Vue.use(List)
 
 export default {
+  name: 'paintingPage',
   props: {
     mode: String
   },
@@ -87,6 +60,11 @@ export default {
       }
     }
   },
+  watch: {
+    $route(to, from) {
+      this.getPainting(this.$route.params.id)
+    }
+  },
   computed: {
     ...mapState(['currentPainiting', 'currentArtistPainitings']),
     cssVars () {
@@ -102,20 +80,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getPainting', 'getPaintings']),
-    handleSwitchTab (type) {
-      // this.getPaintings(this.$route.params.author)
-      this.tabActive = type
-    },
-    isActive (type) {
-      if (this.tabActive === type) {
-        return true
-      }
-    }
+    ...mapActions(['getPainting', 'getPaintings'])
   },
   mounted: function () {
     this.getPainting(this.$route.params.id)
-    console.log(this)
     this.getPaintings(this.$route.params.author)
   }
 }
@@ -126,73 +94,32 @@ export default {
   @import url("~material-components-vue/dist/typography/typography.min.css");
   @import url("~material-components-vue/dist/list/list.min.css");
 
-  .picture {
-    flex: 1 0 auto;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-around;
-    background: var(--bg-color);
-    box-sizing: border-box;
-    color: var(--mdc-theme-primary);
-    padding: 42px 5%;
-    height: calc(100vh - 112px);
-    transition: all 400ms ease;
+  .link {
+    padding: 0 10px;
   }
 
-  .pictureInfo {
-    position: relative;
-  }
-
-  .tabContent {
-    padding: 24px;
-    float: left;
-    clear: both;
+  .painting-router-animation-enter-active {
+    animation: fade-in 1s;
+    animation-delay: 0.5s;
     opacity: 0;
-    transition: all 300ms;
   }
 
-  .tabContent_floating {
-    position: absolute;
-    top: 60px;
-    left: 0;
-    display: none;
-    height: calc(100% - 60px);
-    overflow: scroll;
-    padding: 0;
-    width: 100%;
+  .painting-router-animation-leave-active {
+    animation: fade-out 1s;
   }
 
-  .tabContent_active {
-    display: initial;
-    opacity: 1;
+  @keyframes fade-in {
+    to {
+      transform: translateX(-50px);
+      opacity: 1;
+    }
   }
 
-  .tabInfo {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end
-  }
-
-  .tabInfo__title {
-    margin-bottom: 8px;
-  }
-
-  .tabInfo__author {
-    margin-bottom: 20px;
-  }
-
-  .listItem {
-    text-align: left;
-  }
-
-  img {
-    box-shadow: 1px 1px 3px 1px rgba(0,0,0,0.3);
-    height: 100%;
-  }
-
-  .authorName {
-    color: var(--link-color-inscription);
-    font-weight: 500;
+  @keyframes fade-out {
+    to {
+      transform: translateX(-50px);
+      opacity: 0;
+    }
   }
 
 </style>

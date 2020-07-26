@@ -1,5 +1,5 @@
 <template>
-<router-link :to="`/${this.artist}/${id}`">
+<router-link :to="`/${artist}/${id}`">
   <m-card :style="cssVars">
         <m-card-primary-action ripple>
           <m-card-media >

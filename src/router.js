@@ -1,6 +1,7 @@
 import Home from './views/Home.vue'
 import Klimt from './views/klimt.vue'
-import Picture from './views/paintingPage.vue'
+import Painting from './views/paintingPage.vue'
+import PaintingView from './views/paintingView.vue'
 import Router from 'vue-router'
 import VanGogh from './views/vanGogh.vue'
 import Vue from 'vue'
@@ -14,27 +15,32 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      props: true
     },
     {
       path: '/vanGogh',
       name: 'van Gogh',
-      component: VanGogh
-      // children: [{
-      //   path: '/:id',
-      //   name: 'picture',
-      //   component: Picture
-      // }]
+      component: VanGogh,
+      props: true
     },
     {
       path: '/klimt',
       name: 'Klimt',
-      component: Klimt
+      component: Klimt,
+      props: true
     },
     {
-      path: '/:author/:id',
-      name: 'picture',
-      component: Picture
+      path: '/:author',
+      name: 'paintingPage',
+      component: Painting,
+      props: true,
+      children: [{
+        path: ':id',
+        name: 'PaintingView',
+        component: PaintingView,
+        props: true
+      }]
     }
   ]
 })
