@@ -1,10 +1,10 @@
 <template>
   <div class="home" :style="cssVars">
-    <m-typography class="title">
-      <m-typo-headline :level="4">Amazing Picture Gallery</m-typo-headline>
-    </m-typography>
+    <h1>
+      Amazing Picture Gallery
+    </h1>
 
-    <form @submit.prevent="submitReview" id="user-review-form">
+    <!-- <form @submit.prevent="submitReview" id="user-review-form">
       <m-text-field v-model="formData.userName" id="user-name">
         <m-floating-label for="user-name">Your Name</m-floating-label>
         <m-line-ripple slot="bottomLine"/>
@@ -18,7 +18,7 @@
           slot="label"
           :floatAbove="formData.artistName !== null">
           Artist Name
-        </m-floating-label> 
+        </m-floating-label>
         <m-line-ripple slot="line"/>
       </m-select>
 
@@ -33,7 +33,7 @@
           slot="label"
           :floatAbove="selected !== null">
           Painting Name
-        </m-floating-label> 
+        </m-floating-label>
         <m-line-ripple slot="line"/>
       </m-select>
 
@@ -44,9 +44,9 @@
       <m-button outlined type="submit">
         Submit
       </m-button>
-    </form>
+    </form> -->
 
-    <form @submit.prevent="submitPainting" id="painting-form">
+    <!-- <form @submit.prevent="submitPainting" id="painting-form">
       <m-text-field v-model="formPainting.title" id="painting-title">
         <m-floating-label for="painting-title">Title</m-floating-label>
         <m-line-ripple slot="bottomLine"/>
@@ -63,7 +63,7 @@
           slot="label"
           :floatAbove="formPainting.artist !== null">
           Artist
-        </m-floating-label> 
+        </m-floating-label>
         <m-line-ripple slot="line"/>
       </m-select>
 
@@ -95,28 +95,13 @@
       <m-button outlined>
         Submit
       </m-button>
-    </form>
+    </form> -->
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex'
-import Vue from 'vue'
 import palette from './../assets/palette'
-
-import Headline from 'material-components-vue/dist/typography'
-import TextField from 'material-components-vue/dist/text-field'
-import FloatingLabel from 'material-components-vue/dist/floating-label'
-import LineRipple from 'material-components-vue/dist/line-ripple'
-import Select from 'material-components-vue/dist/select'
-import Button from 'material-components-vue/dist/button'
-
-Vue.use(Headline)
-Vue.use(TextField)
-Vue.use(FloatingLabel)
-Vue.use(LineRipple)
-Vue.use(Select)
-Vue.use(Button)
 
 export default {
   name: 'home',
@@ -144,7 +129,7 @@ export default {
     }
   },
   methods: {
-        ...mapActions(['addReview', 'addPainting', 'getArtists']),
+    ...mapActions(['addReview', 'addPainting', 'getArtists']),
 
     submitReview () {
       const { userName, artistName, paintingId, reviewText } = this.formData
@@ -164,13 +149,13 @@ export default {
     },
 
     submitPainting () {
-      const { title, artist, medium, year, dimensions, location, imageURL } = this.formPainting;
-      const painting = { title, artist, medium, year, dimensions, location, imageURL };
-      this.addPainting(painting);
+      const { title, artist, medium, year, dimensions, location, imageURL } = this.formPainting
+      const painting = { title, artist, medium, year, dimensions, location, imageURL }
+      this.addPainting(painting)
     }
   },
   computed: {
-    ...mapGetters(['paintingsCount','getOilPaintings']),
+    ...mapGetters(['paintingsCount', 'getOilPaintings']),
     ...mapState(['artists']),
     cssVars () {
       return {
@@ -180,19 +165,12 @@ export default {
     }
   },
   mounted () {
-    this.getArtists();
+    this.getArtists()
   }
 }
 </script>
 
 <style scoped>
-  @import url("~material-components-vue/dist/typography/typography.min.css");
-  @import url("~material-components-vue/dist/text-field/text-field.min.css");
-  @import url("~material-components-vue/dist/floating-label/floating-label.min.css");
-  @import url("~material-components-vue/dist/line-ripple/line-ripple.min.css");
-  @import url("~material-components-vue/dist/select/select.min.css");
-  @import url("~material-components-vue/dist/button/button.min.css");
-
   .home {
     display: grid;
     grid-template-columns: 1fr;

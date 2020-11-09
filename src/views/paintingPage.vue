@@ -10,32 +10,22 @@
       </router-link>
     </ul>
 
-    <transition name="painting-router-animation">
-      <router-view
+      <router-view v-slot="slotProps"
         v-bind:key="$route.params.id"
         v-if="currentPainiting"
         :mode="mode"
-        :currentPainiting="currentPainiting"/>
-    </transition>
+        :currentPainiting="currentPainiting"
+        >
+        <component :is="slotProps.Component" ></component>
+          <!-- <transition name="painting-router-animation"></transition> -->
+        </router-view>
   </div>
 
 </template>
 
 <script>
-import Vue from 'vue'
-
 import { mapActions, mapState } from 'vuex'
 import palette from './../assets/palette'
-
-import Card from 'material-components-vue/dist/card'
-import Headline from 'material-components-vue/dist/typography'
-import Body from 'material-components-vue/dist/typography'
-import List from 'material-components-vue/dist/list'
-
-Vue.use(Card)
-Vue.use(Headline)
-Vue.use(Body)
-Vue.use(List)
 
 export default {
   name: 'paintingPage',
@@ -62,7 +52,7 @@ export default {
     }
   },
   watch: {
-    $route(to, from) {
+    $route (to, from) {
       this.getPainting(this.$route.params.id)
     }
   },
@@ -92,15 +82,8 @@ export default {
 </script>
 
 <style scoped>
-  @import url("~material-components-vue/dist/card/card.min.css");
-  @import url("~material-components-vue/dist/typography/typography.min.css");
-  @import url("~material-components-vue/dist/list/list.min.css");
-
   .paintingWall {
     flex: 1 0 auto;
-    /* display: flex;
-    flex-direction: column;
-    justify-content: space-around; */
     background: var(--bg-color);
     max-height: calc(100vh - 112px);
   }
@@ -130,7 +113,7 @@ export default {
     text-shadow: 1px 0 var(--mdc-theme-text-primary-on-background)
   }
 
-  .painting-router-animation-enter-active {
+  /* .painting-router-animation-enter-active {
     animation: fade-in 1s;
     animation-delay: 0.5s;
     animation-fill-mode: forwards;
@@ -160,7 +143,7 @@ export default {
       transform: translateY(100%);
       opacity: 0;
     }
-  }
+  } */
 
 </style>
 

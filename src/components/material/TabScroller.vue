@@ -63,7 +63,7 @@ export default {
   },
   computed: {
     classes () {
-      return this.align ? 'mdc-tab-scroller--align-' + this.align : '';
+      return this.align ? 'mdc-tab-scroller--align-' + this.align : ''
     }
   },
   mounted () {

@@ -1,57 +1,43 @@
 <template>
   <div v-if="currentPainiting" class="painting" :style="cssVars">
+
     <img :src=currentPainiting.imageURL />
 
-    <m-card class="pictureInfo">
-      <m-tab-bar>
-        <app-m-tab-scroller class="tabs">
-          <app-tab @click.native="handleSwitchTab('description')" :minWidth="true" :active="isActive('description')">
-            Description
-          </app-tab>
-          <app-tab @click.native="handleSwitchTab('reviews')" :minWidth="true" :active="isActive('reviews')">
-            Reviews
-          </app-tab>
-        </app-m-tab-scroller>
-      </m-tab-bar>
-      <div class="tabContent" :class="{ tabContent_active: isActive('description') }">
-        <m-typography class="tabInfo">
-          <m-typo-headline :level="5" class="tabInfo__title">{{ currentPainiting.title }}</m-typo-headline>
-          <m-typo-body :level="1">painted in {{ currentPainiting.year }}</m-typo-body>
-          <m-typo-body :level="1" class="tabInfo__author">
+    <div>
+      <div>
+        <button @click.native="handleSwitchTab('description')" :active="isActive('description')">
+          Description
+        </button>
+        <button @click.native="handleSwitchTab('reviews')" :active="isActive('reviews')">
+          Reviews
+        </button>
+      </div>
+      <div class="pictureInfo">
+        <div class="tabContent" :class="{ tabContent_active: isActive('description') }">
+          <h2>{{ currentPainiting.title }}</h2>
+          <span>painted in {{ currentPainiting.year }}</span>
+          <span>
             by <router-link :to="`/${$route.params.author}`" class="authorName">{{ currentPainiting.artist.name }}</router-link>
-          </m-typo-body>
-          <m-typo-body :level="1">{{ currentPainiting.medium }}</m-typo-body>
-          <m-typo-body :level="1">{{ currentPainiting.location }}</m-typo-body>
-        </m-typography>
-      </div>
+          </span>
+          <span>{{ currentPainiting.medium }}</span>
+          <span>{{ currentPainiting.location }}</span>
+        </div>
 
-      <div class="tabContent tabContent_floating" :class="{ tabContent_active: isActive('reviews') }">
-        <m-list two-line nonInteractive class="paintingReviews">
-            <m-list-item tabindex="0" v-for="(review, index) in currentPainiting.reviews" :key="index" class="listItem">
-                <template slot="primaryText">{{ review.userName }}</template>
-                <template slot="secondaryText">{{ review.reviewText }}</template>
-            </m-list-item>
-        </m-list>
+        <div class="tabContent tabContent_floating" :class="{ tabContent_active: isActive('reviews') }">
+          <ul class="paintingReviews">
+            <li v-for="(review, index) in currentPainiting.reviews" :key="index" class="listItem">
+              <span>{{ review.userName }}</span>
+              <span>{{ review.reviewText }}</span>
+            </li>
+          </ul>
+        </div>
       </div>
-    </m-card>
+    </div>
   </div>
 </template>
 
 <script>
-import Vue from 'vue'
-
-import { mapActions, mapState } from 'vuex'
 import palette from './../assets/palette'
-
-import Card from 'material-components-vue/dist/card'
-import Headline from 'material-components-vue/dist/typography'
-import Body from 'material-components-vue/dist/typography'
-import List from 'material-components-vue/dist/list'
-
-Vue.use(Card)
-Vue.use(Headline)
-Vue.use(Body)
-Vue.use(List)
 
 export default {
   name: 'PaintingView',
@@ -105,10 +91,6 @@ export default {
 </script>
 
 <style scoped>
-  @import url("~material-components-vue/dist/card/card.min.css");
-  @import url("~material-components-vue/dist/typography/typography.min.css");
-  @import url("~material-components-vue/dist/list/list.min.css");
-
   .painting {
     position: fixed;
     top: 200px;

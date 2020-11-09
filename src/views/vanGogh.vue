@@ -19,9 +19,8 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import Artist from '../components/artistPage'
-import { mapActions, mapMutations, mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex'
 
 export default {
   props: {
@@ -31,13 +30,13 @@ export default {
     Artist
   },
   computed: {
-    ...mapState(['testPaintings',]),
+    ...mapState(['testPaintings'])
   },
   methods: {
-    ...mapActions(['getPaintings']),
+    ...mapActions(['getPaintings'])
   },
   mounted () {
-    this.getPaintings('vanGogh');
+    this.getPaintings('vanGogh')
   }
 }
 </script>

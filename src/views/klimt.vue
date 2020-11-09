@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Vue from 'vue'
+// import Vue from 'vue'
 import Artist from '../components/artistPage'
 
 export default {
@@ -24,6 +24,6 @@ export default {
   },
   components: {
     Artist
-  },
+  }
 }
 </script>

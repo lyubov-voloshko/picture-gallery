@@ -1,57 +1,32 @@
 <template>
   <div id="app" :style="cssVars" class="main">
-    <m-top-app-bar :style="topBarColors">
-      <m-typography>
-        <m-typo-headline :level="5">
-          <router-link to="/">Gallery</router-link>
-        </m-typo-headline>
-      </m-typography>
+    <div :style="topBarColors" class="header">
+      <router-link to="/" class="header__name">Gallery</router-link>
+      <button @click="switchTheme()">switch theme</button>
+    </div>
 
-      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
-        <m-icon-button icon="invert_colors" @click="switchTheme()"></m-icon-button>
-      </section>
-    </m-top-app-bar>
-
-    <m-top-app-bar-fixed-adjust class="stickyContent">
-      <m-tab-bar scrollable :useAutomaticActivation="false" class="tabs" :style="tabsColors">
-        <app-m-tab-scroller align="center">
-           <app-tab href="/vanGogh" :minWidth="true" :active="$route.path.startsWith('/vanGogh')">
+    <div class="stickyContent">
+      <div class="tabs" :style="tabsColors">
+          <router-link to="/vanGogh" :active="$route.path.startsWith('/vanGogh')"
+            class="tab">
             van Gogh
-          </app-tab>
-          <app-tab href="/klimt" :minWidth="true" :active="$route.path.startsWith('/klimt')">
+          </router-link>
+          <router-link to="/klimt" :active="$route.path.startsWith('/klimt')"
+            class="tab">
             Klimt
-          </app-tab>
-        </app-m-tab-scroller>
-      </m-tab-bar>
+          </router-link>
+      </div>
 
-      <transition name="artisr-router-animation">
-        <router-view :mode="currentMode"/>
-      </transition>
-    </m-top-app-bar-fixed-adjust>
+      <router-view :mode="currentMode" v-slot="slotProps">
+        <component :is="slotProps.Component"></component>
+        <!-- <transition name="artisr-router-animation"></transition> -->
+      </router-view>
+    </div>
   </div>
 </template>
 
 <script>
 import palette from './assets/palette'
-import Vue from 'vue'
-
-import Button from 'material-components-vue/dist/button'
-import Headline from 'material-components-vue/dist/typography'
-import NavBar from 'material-components-vue/dist/top-app-bar'
-import IconButton from 'material-components-vue/dist/icon-button'
-import TabBar from 'material-components-vue/dist/tabs'
-import TabScroller from './components/material/TabScroller'
-import Tab from './components/material/Tab'
-
-Vue.use(Button)
-Vue.use(Headline)
-Vue.use(NavBar)
-Vue.use(IconButton)
-Vue.use(TabBar)
-Vue.use(Tab)
-
-Vue.component('app-tab', Tab)
-Vue.component('app-m-tab-scroller', TabScroller)
 
 export default {
   name: 'app',
@@ -63,23 +38,22 @@ export default {
   },
   methods: {
     switchTheme () {
-      console.log(this.$route)
       if (this.currentMode === 'light') {
         this.currentMode = 'dark'
       } else {
         this.currentMode = 'light'
       }
-    },
-    changeTab (location) {
-      this.$router.push(location)
     }
+    // changeTab (location) {
+    //   this.$router.push(location)
+    // }
   },
   computed: {
     cssVars () {
       return {
         '--mdc-theme-on-primary': this.palette.common[this.currentMode].textColor,
         '--mdc-theme-background': this.palette.common[this.currentMode].bgColor,
-        '--mdc-theme-primary': this.palette.common[this.currentMode].textColor
+        '--text-color': this.palette.common[this.currentMode].textColor
       }
     },
     topBarColors () {
@@ -98,15 +72,6 @@ export default {
 </script>
 
 <style>
-  @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500");
-  @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
-
-  @import url("~material-components-vue/dist/button/button.min.css");
-  @import url("~material-components-vue/dist/typography/typography.min.css");
-  @import url("~material-components-vue/dist/top-app-bar/top-app-bar.min.css");
-  @import url("~material-components-vue/dist/icon-button/icon-button.min.css");
-  @import url("~material-components-vue/dist/tabs/tabs.min.css");
-
   * {
     margin: 0;
     padding: 0;
@@ -116,6 +81,7 @@ export default {
     display: flex;
     flex-direction: column;
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    color: var(--text-color);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
@@ -123,23 +89,42 @@ export default {
     transition: all 400ms ease;
   }
 
-  .tabs {
-    background: var(--tabs-bgcolor);
-  }
-
-  .mdc-top-app-bar {
-    color: var(--name-color) !important;
-  }
-
-  .mdc-top-app-bar__row {
+  .header {
+    display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-left: 16px;
+    height: 64px;
+    padding: 0 16px;
   }
 
-  .mdc-top-app-bar__row a {
-    color: var(--name-color);
+  .header__name {
+    color: inherit;
+    font-size: 1.5rem;
+    font-weight: 400;
     text-decoration: none;
+  }
+
+  .tabs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--tabs-bgcolor);
+    height: 48px;
+  }
+
+  .tab {
+    color: inherit;
+    font-size: 0.875em;
+    font-weight: 500;
+    line-height: 48px;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: 0 16px;
+    transition: background 400ms;
+  }
+
+  .tab:hover {
+    background: rgba(0,0,0,0.04);
   }
 
   .main {
@@ -158,7 +143,7 @@ export default {
     width: inherit;
   }
 
-  .artisr-router-animation-enter-active {
+  /* .artisr-router-animation-enter-active {
     animation: fade-in 1s;
     animation-delay: 0.5s;
     opacity: 0;
@@ -166,9 +151,9 @@ export default {
 
   .artisr-router-animation-leave-active {
     animation: fade-out 1s;
-  }
+  } */
 
-  @keyframes fade-in {
+  /* @keyframes fade-in {
     to {
       opacity: 1;
     }
@@ -178,5 +163,5 @@ export default {
     to {
       opacity: 0;
     }
-  }
+  } */
 </style>

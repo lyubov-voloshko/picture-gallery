@@ -6,8 +6,6 @@ export default {
   getOilPaintings: (state) => {
     return state.paintings.filter((painting) => {
       return painting.medium === 'Oil, canvas'
-    });
+    })
   }
-
-  
 }
